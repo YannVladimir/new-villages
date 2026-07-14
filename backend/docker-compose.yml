@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: onevillage
+      POSTGRES_USER: onevillage
+      POSTGRES_PASSWORD: onevillage
+    ports:
+      - "5432:5432"
+    volumes:
+      - onevillage-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U onevillage"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    restart: unless-stopped
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI to view sent emails
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: onevillage
+      DB_USER: onevillage
+      DB_PASSWORD: onevillage
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      JWT_SECRET: ${JWT_SECRET:-dev-only-change-me-please-change-me-32bytes}
+      APP_CORS_ORIGINS: ${APP_CORS_ORIGINS:-http://localhost:5173}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      STRIPE_PRICE_LEADER: ${STRIPE_PRICE_LEADER:-}
+      STRIPE_PRICE_ORGANIZATION: ${STRIPE_PRICE_ORGANIZATION:-}
+      ADMIN_SEED_EMAIL: ${ADMIN_SEED_EMAIL:-admin@onevillage.ca}
+      ADMIN_SEED_PASSWORD: ${ADMIN_SEED_PASSWORD:-ChangeMe123!}
+    ports:
+      - "8080:8080"
+    volumes:
+      - onevillage-uploads:/app/uploads
+
+volumes:
+  onevillage-postgres-data:
+  onevillage-uploads:

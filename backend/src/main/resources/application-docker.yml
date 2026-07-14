@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:onevillage}
+
+app:
+  uploads:
+    dir: ${UPLOADS_DIR:/app/uploads}

@@ -1,0 +1,85 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-page: #F6F5FB;
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --border-color: #E5E7EB;
+  }
+
+  .dark {
+    --bg-page: #0F0F1A;
+    --bg-card: #1C1B2E;
+    --bg-sidebar: #16152A;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --border-color: #2D2B45;
+  }
+
+  body {
+    @apply font-body text-gray-900 bg-background-light;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    @apply bg-gray-950 text-gray-100;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+
+  /* Dark mode card overrides */
+  .dark .bg-white {
+    background-color: var(--bg-card) !important;
+  }
+  .dark .bg-background-light {
+    background-color: var(--bg-page) !important;
+  }
+  .dark .border-gray-200,
+  .dark .border-gray-100 {
+    border-color: var(--border-color) !important;
+  }
+  .dark .text-gray-900 {
+    color: var(--text-primary) !important;
+  }
+  .dark .text-gray-600,
+  .dark .text-gray-500 {
+    color: var(--text-secondary) !important;
+  }
+  .dark .bg-gray-50 {
+    background-color: #1e1d30 !important;
+  }
+  .dark .bg-gray-100 {
+    background-color: #252438 !important;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 999px;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #374151;
+  }
+}

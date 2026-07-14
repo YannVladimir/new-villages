@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:onevillage;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+
+app:
+  jwt:
+    secret: test-secret-key-not-for-production-use-only-32bytes

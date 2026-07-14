@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(java -version)",
+      "Bash(mvn -version)",
+      "Bash(docker --version)",
+      "PowerShell($env:PGPASSWORD = \"postgres\"; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -p 5432 -c \"SELECT version\\(\\);\" 2>&1)",
+      "PowerShell($env:PGPASSWORD = \"postgres\"; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -p 5432 -c \"SELECT 1 FROM pg_database WHERE datname = 'new-villages';\")",
+      "Bash(curl *)",
+      "PowerShell(Invoke-WebRequest -Uri \"http://localhost:8080/api/auth/verify-email?token=6add1f6a-57f0-4773-aa72-1aa8f9ae10cf\" -Method Get | Select-Object StatusCode)",
+      "PowerShell(mvn spring-boot:run *)",
+      "Bash(tasklist)",
+      "Bash(python3 *)",
+      "Bash(python -c \"print\\(1\\)\")",
+      "Bash(node -e \"console.log\\(1\\)\")",
+      "Bash(perl -e \"print 1\")"
+    ]
+  }
+}

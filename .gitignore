@@ -1,0 +1,19 @@
+# Editor / IDE
+.vscode/
+.idea/
+*.iml
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Local Claude Code session state (machine/session-specific, never shared)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Node (in case anything is run from the repo root)
+node_modules/
+
+# Java build output (in case anything is built from the repo root)
+target/
+*.class

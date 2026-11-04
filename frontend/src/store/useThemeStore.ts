@@ -33,6 +33,8 @@ export function initTheme() {
     try {
       const { state } = JSON.parse(stored);
       if (state?.isDark) document.documentElement.classList.add('dark');
-    } catch (_) {}
+    } catch {
+      // Corrupted or unreadable localStorage value — ignore and keep default theme.
+    }
   }
 }

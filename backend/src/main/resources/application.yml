@@ -23,19 +23,19 @@ spring:
     baseline-on-migrate: true
 
   mail:
-    host: ${MAIL_HOST:mail.carmani-business.com}
-    port: ${MAIL_PORT:465}
-    username: ${MAIL_USERNAME:test@carmani-business.com}
-    password: ${MAIL_PASSWORD:Testpassword2026}
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
     properties:
       mail:
         smtp:
-          auth: ${MAIL_SMTP_AUTH:true}
+          auth: ${MAIL_SMTP_AUTH:false}
           starttls:
             enable: ${MAIL_SMTP_STARTTLS:false}
           ssl:
-            enable: ${MAIL_SMTP_SSL:true}
-            trust: ${MAIL_HOST:mail.carmani-business.com}
+            enable: ${MAIL_SMTP_SSL:false}
+            trust: ${MAIL_HOST:localhost}
             checkserveridentity: false
           connectiontimeout: 10000
           timeout: 10000
@@ -57,7 +57,7 @@ app:
     access-token-ttl-minutes: ${JWT_ACCESS_TTL_MIN:15}
     refresh-token-ttl-days: ${JWT_REFRESH_TTL_DAYS:30}
   mail:
-    from: ${MAIL_FROM:test@carmani-business.com}
+    from: ${MAIL_FROM:no-reply@onevillage.ca}
   frontend:
     base-url: ${FRONTEND_BASE_URL:http://localhost:5173}
   uploads:

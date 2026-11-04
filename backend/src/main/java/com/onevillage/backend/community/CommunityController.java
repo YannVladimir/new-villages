@@ -80,13 +80,15 @@ public class CommunityController {
 
     @PostMapping("/api/invitations/{id}/accept")
     public ResponseEntity<Void> acceptInvitation(@PathVariable UUID id) {
-        communityService.respondToInvitation(id, SecurityUtils.currentUserId(), true);
+        var user = SecurityUtils.currentUser();
+        communityService.respondToInvitation(id, user.getId(), user.getUsername(), true);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/api/invitations/{id}/decline")
     public ResponseEntity<Void> declineInvitation(@PathVariable UUID id) {
-        communityService.respondToInvitation(id, SecurityUtils.currentUserId(), false);
+        var user = SecurityUtils.currentUser();
+        communityService.respondToInvitation(id, user.getId(), user.getUsername(), false);
         return ResponseEntity.noContent().build();
     }
 }

@@ -123,9 +123,23 @@ public class CommunityService {
     }
 
     @Transactional
-    public void respondToInvitation(UUID invitationId, UUID userId, boolean accept) {
+    public void respondToInvitation(UUID invitationId, UUID userId, String userEmail, boolean accept) {
         CommunityInvitation invitation = invitationRepository.findById(invitationId)
                 .orElseThrow(() -> ApiException.notFound("Invitation not found"));
+
+        // IDOR guard: an invitation may only be accepted/declined by the user it was actually
+        // sent to (matched by user id once claimed, or by email before the invitee had an
+        // account) — otherwise any authenticated user could guess/enumerate invitation UUIDs
+        // and join communities (including private ones) they were never invited to.
+        boolean isRecipient = userId.equals(invitation.getInvitedUserId())
+                || (invitation.getInvitedEmail() != null && invitation.getInvitedEmail().equalsIgnoreCase(userEmail));
+        if (!isRecipient) {
+            throw ApiException.forbidden("This invitation was not sent to you");
+        }
+        if (invitation.getStatus() != InvitationStatus.PENDING) {
+            throw ApiException.badRequest("This invitation has already been responded to");
+        }
+
         invitation.setStatus(accept ? InvitationStatus.ACCEPTED : InvitationStatus.DECLINED);
         invitationRepository.save(invitation);
         if (accept) {
